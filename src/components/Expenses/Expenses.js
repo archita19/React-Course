@@ -12,14 +12,17 @@ export default function Expenses({data}) {
     }
 
     const filteredExpenses = data.filter(expense => expense.date.getFullYear() === filterYear)
-
+    const expenseContent = filteredExpenses.length === 0 ? 
+        <p style={{color: '#fff', textAlign: 'center'}}>No expenses found!</p> : 
+        filteredExpenses.map(expense => 
+            <ExpenseItem key={expense.id} title={expense.title} date={expense.date} amount={expense.amount}/>
+        )
+    
     return (  
         <div>
             <Card className="expenses">
                 <ExpenseFilter selected={filterYear} onChangeFilter={changeExpenseFilter}/>
-                {
-                    filteredExpenses.map(expense => <ExpenseItem key={expense.id} title={expense.title} date={expense.date} amount={expense.amount}/>)
-                }
+                {expenseContent}
             </Card>
         </div>
     )
