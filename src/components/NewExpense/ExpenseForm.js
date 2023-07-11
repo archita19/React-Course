@@ -17,13 +17,14 @@ export default function ExpenseForm(props) {
 
     const formSubmitHandler = e => {
         e.preventDefault()
-        // for(const [key, value] of Object.entries(formInputs)) {
-        //     if(key === 'date') console.log(`${key}: ${new Date(value)}`)
-        //     else console.log(`${key}: ${value}`)
-        // }
         const newExpense = {...formInputs, amount: Number(formInputs.amount), date: new Date(formInputs.date)}
         props.onSaveExpense(newExpense)
         setFormInputs({title: '', amount: '', date: ''})
+        props.onCancel()
+    }
+
+    const formCancelHandler = () => {
+        props.onCancel()
     }
 
     return (
@@ -43,6 +44,7 @@ export default function ExpenseForm(props) {
                 </div>
             </div>
             <div className="new-expense__actions">
+                <button type="button" onClick={formCancelHandler}>Cancel</button>
                 <button type="submit" onClick={formSubmitHandler}>Add Expense</button>
             </div>
         </form>
